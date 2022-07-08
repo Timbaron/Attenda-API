@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,13 @@ class CourseFactory extends Factory
      */
     public function definition()
     {
+        $lecturers = User::all()->pluck('id')->toArray();
         return [
-            //
+            'course_id' => uniqid('COU-'),
+            'title' => fake()->sentence(fake()->numberBetween(2,3)),
+            'code' => 'CMP ' . fake()->numberBetween(111,999),
+            'lecturer' => fake()->randomElement($lecturers),
+            'total_students' => fake()->numberBetween(20,50)
         ];
     }
 }
