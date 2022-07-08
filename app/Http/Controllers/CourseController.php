@@ -17,7 +17,7 @@ class CourseController extends Controller
     {
         $courses = Course::whereLecturer(auth()->user()->id)->latest()->get();
 
-        if(!empty($courses)){
+        if(count($courses) > 0){
             return response()->json([
                 'courses' => $courses,
                 'message' => 'Courses has been retrieved successfully'
@@ -65,9 +65,16 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($course)
     {
-        //
+        $course = Course::whereId($course)->latest()->get();
+        if(count($course) > 0){
+            $response = ['course' => $course, 'message' => 'Course Retrived successfully'];
+            return response($response, 200);
+        } else {
+            $response = ["message" => "Course not found"];
+            return response($response, 422);
+        }
     }
 
     /**
@@ -77,9 +84,12 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $course)
     {
-        //
+        $course = Course::whereId($course)->first();
+        $course->update($request->all());
+        $response = ['course'=> $course, 'message'=>'Course updated successfully'];
+        return response($response, 200);
     }
 
     /**
@@ -88,8 +98,12 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($course)
     {
-        //
+        $course = Course::whereId($course)->firstorFail();
+        $course->delete();
+        $response = ['message' => 'Course deleted successfully'];
+        return response($response, 200);
+
     }
 }
