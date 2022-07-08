@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\AttendController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\HomeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,11 +22,19 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::middleware('auth:sanctum')->group(function () {
+    // API routes for CRUD on courses
     Route::get('/course', [CourseController::class, 'index']);
     Route::get('/course/create', [CourseController::class, 'store']);
     Route::get('/course/{id}', [CourseController::class, 'show']);
     Route::post('/course/update/{id}', [CourseController::class, 'update']);
     Route::post('/course/delete/{id}', [CourseController::class, 'destroy']);
+
+    // API routes to create attendance sheets
+    Route::get('/attendance/create', [AttendController::class, 'create']);
+    Route::post('/attendance/mark', [AttendController::class,'store']);
+    Route::get('/attendance/{id}', [AttendController::class, 'show']);
+    Route::post('/attendance/destroy', [AttendController::class, 'destroy']);
+
 });
 
 Route::post('/register', [RegisterController::class,'create']);
