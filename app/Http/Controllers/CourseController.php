@@ -16,10 +16,12 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::whereLecturer(auth()->user()->id)->latest()->get();
+        $courseCount = $courses->count();
 
         if(count($courses) > 0){
             return response()->json([
                 'courses' => $courses,
+                'total' => $courseCount,
                 'message' => 'Courses has been retrieved successfully'
             ]);
         }
