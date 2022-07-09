@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attend;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -69,9 +70,14 @@ class CourseController extends Controller
      */
     public function show($course)
     {
-        $course = Course::whereId($course)->latest()->get();
-        if(count($course) > 0){
-            $response = ['course' => $course, 'message' => 'Course Retrived successfully'];
+        $course = Course::whereId($course)->first();
+        $attendance = Attend::where('course_id',$course->course_id)->latest()->get();
+        if(!empty($course)){
+            $response = [
+                'course' => $course,
+                'attendance' => $attendance,
+                'message' => 'Course Retrived successfully'
+            ];
             return response($response, 200);
         } else {
             $response = ["message" => "Course not found"];
