@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->string('first_name')->after('id');
             $table->string('last_name')->after('first_name');
-            $table->string('full_name')->virtualAs("CONCAT(first_name, ' ', last_name)")->after('last_name');
+            $table->string('full_name')->after('last_name');
         });
     }
 

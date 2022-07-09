@@ -18,9 +18,12 @@ class UserFactory extends Factory
     public function definition()
     {
         $gender = ['male','female'];
+        $firstName = fake()->firstName(fake()->randomElement($gender));
+        $lastName = fake()->lastName(fake()->randomElement($gender));
         return [
-            'first_name' => fake()->firstName(fake()->randomElement($gender)),
-            'last_name' => fake()->lastName(fake()->randomElement($gender)),
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'full_name' => $firstName . ' ' . $lastName,
             'email' => fake()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
