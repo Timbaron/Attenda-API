@@ -57,14 +57,14 @@ class LoginController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Attenda Login Token');
-                $response = ['token' => $token->plainTextToken];
+                $response = ['token' => $token->plainTextToken, 'status' => 'success', 'message' => 'Login successfully'];
                 return response($response, 200);
             } else {
-                $response = ["message" => "Password mismatch"];
+                $response = ["message" => "Password mismatch", 'status' => 'error'];
                 return response($response, 422);
             }
         } else {
-            $response = ["message" => 'User does not exist'];
+            $response = ["message" => 'User does not exist', 'status' => 'error'];
             return response($response, 422);
         }
     }
