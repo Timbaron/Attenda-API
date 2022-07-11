@@ -18,11 +18,13 @@ class CourseController extends Controller
     {
         $courses = Course::whereLecturer(auth()->user()->id)->latest()->get();
         $courseCount = $courses->count();
+        $user = auth()->user();
 
         if(count($courses) > 0){
             return response()->json([
                 'courses' => $courses,
                 'total' => $courseCount,
+                'user' => $user,
                 'message' => 'Courses has been retrieved successfully'
             ]);
         }
