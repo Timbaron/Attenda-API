@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/attendance/mark', [AttendController::class,'store']);
     Route::get('/attendance/{id}', [AttendController::class, 'show']);
     Route::post('/attendance/destroy', [AttendController::class, 'destroy']);
+    Route::post('/logout', [LoginController::class, 'logout']);
 
 });
 
