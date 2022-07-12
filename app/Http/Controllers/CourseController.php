@@ -50,16 +50,16 @@ class CourseController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
+            return response(['message' => $validator->errors()->all(), 'status' => 'error'], 422);
         }
         $request['course_id'] = uniqid('COU-');
         $course = Course::create($request->all());
 
         if($course){
-            $response = ['course' => $course, 'message' => 'Course Created successfully'];
+            $response = ['course' => $course, 'status' => 'success', 'message' => 'Course Created successfully'];
             return response($response, 200);
         } else {
-            $response = ["message" => "Course Creation failed"];
+            $response = ["message" => "Course Creation failed",'status' => 'error'];
             return response($response, 422);
         }
     }

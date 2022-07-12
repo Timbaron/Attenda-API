@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     // API routes for CRUD on courses
     Route::get('/course', [CourseController::class, 'index']);
-    Route::get('/course/create', [CourseController::class, 'store']);
+    Route::post('/course/create', [CourseController::class, 'store']);
     Route::get('/course/{id}', [CourseController::class, 'show']);
     Route::post('/course/update/{id}', [CourseController::class, 'update']);
     Route::post('/course/delete/{id}', [CourseController::class, 'destroy']);
