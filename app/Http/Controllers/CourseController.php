@@ -59,7 +59,7 @@ class CourseController extends Controller
             $response = ['course' => $course, 'status' => 'success', 'message' => 'Course Created successfully'];
             return response($response, 200);
         } else {
-            $response = ["message" => "Course Creation failed",'status' => 'error'];
+            $response = ["message" => ["Course Creation failed"],'status' => 'error'];
             return response($response, 422);
         }
     }
