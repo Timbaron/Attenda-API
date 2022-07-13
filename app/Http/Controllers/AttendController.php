@@ -62,13 +62,14 @@ class AttendController extends Controller
         if(empty($attendance)){
             return response()->json([
                 'message' => 'Attedance not found',
+                'status' => 'error'
             ]);
         }
         $attendees = json_decode($attendance->attendees);
 
         // Check if student has already marked their attendance
         if(in_array($request->student_id ,$attendees)){
-            $response = ['message' => $request->student_id . ' Already exist','status'=> 'error'];
+            $response = ['message' => $request->student_id . ' Attendance has already been marked','status'=> 'error'];
             return response($response, 200);
         }
         else {
