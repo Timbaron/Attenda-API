@@ -25,27 +25,29 @@ class AttendController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create(){
-        // get all lecturers courses
-        $courses = Course::whereLecturer(auth()->user()->id)->latest()->get();
-        $courseCount = $courses->count();
-
-        // create attendance
-        $attendance = Attend::create([
-            'attendance_id' => uniqid('ATD-'),
-            'attendees' => json_encode([]),
-        ]);
-        if (count($courses) > 0) {
+    public function create(Request $request){
+        if($request->course_id == null){
             return response()->json([
-                'courses' => $courses,
-                'attendance' => $attendance,
-                'total' => $courseCount,
-                'message' => 'Attendance created successfully'
+                'status' => 'error',
+                'message' => 'No course found'
             ]);
         }
-        return response()->json([
-            'message' => 'You have no courses to retrieve, please create one and try again!!'
-        ]);
+        // create attendance
+        else {
+            $attendance = Attend::create([
+                'attendance_id' => uniqid('ATD-'),
+                'course_id' => $request->course_id,
+                'attendees' => json_encode([]),
+            ]);
+            if ($attendance) {
+                return response()->json([
+                    'attendance' => $attendance,
+                    'message' => 'Attendance created successfully',
+                    'status' => 'success'
+                ]);
+            }
+        }
+        
     }
     /**
      * Store a newly created resource in storage.
