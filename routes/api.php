@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/course/delete/{id}', [CourseController::class, 'destroy']);
 
     // API routes to create attendance sheets
-    Route::post('/attendance/create', [AttendController::class, 'create']);
+    Route::get('/attendance/create/{course_id}', [AttendController::class, 'create']);
     Route::post('/attendance/mark', [AttendController::class,'store']);
     Route::get('/attendance/{id}', [AttendController::class, 'show']);
     Route::post('/attendance/destroy', [AttendController::class, 'destroy']);

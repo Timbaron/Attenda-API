@@ -25,8 +25,8 @@ class AttendController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function create(Request $request){
-        if($request->course_id == null){
+    public function create($course_id){
+        if($course_id == null){
             return response()->json([
                 'status' => 'error',
                 'message' => 'No course found'
@@ -36,7 +36,7 @@ class AttendController extends Controller
         else {
             $attendance = Attend::create([
                 'attendance_id' => uniqid('ATD-'),
-                'course_id' => $request->course_id,
+                'course_id' => $course_id,
                 'attendees' => json_encode([]),
             ]);
             if ($attendance) {
@@ -47,7 +47,7 @@ class AttendController extends Controller
                 ]);
             }
         }
-        
+
     }
     /**
      * Store a newly created resource in storage.
